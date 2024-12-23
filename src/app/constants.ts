@@ -1,0 +1,1 @@
+export const constApi:String="https://localhost:7101:/"
