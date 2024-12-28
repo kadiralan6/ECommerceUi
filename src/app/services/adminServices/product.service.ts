@@ -10,20 +10,11 @@ import { ProductListModel } from "../../models/products/productList.model";
 export class ProductService{
     constructor(private httpSerivce:HttpService){}
 
-    async getList(
-        callBack: (res: ProductListModel[]) => void,
-        errorCallBack?: () => void
-      ): Promise<void> {
-        try {
-          const response = await this.httpSerivce.post<ProductListModel[]>(
-            'getListProduct',
-            {}
-          );
-          callBack(response); // `response` artık `ProductListModel[]` türünde
-        } catch (error) {
-          if (errorCallBack) {
-            errorCallBack();
-          }
-        }
-      }
+    getListProduct(successCallback: (products: ProductListModel) => void, errorCallback?: () => void): void {
+      this.httpSerivce.get<ProductListModel>(
+        'product/getListProduct', // API endpoint
+        successCallback, // Başarılı callback
+        errorCallback // Hata callback
+      );
+    }
 }

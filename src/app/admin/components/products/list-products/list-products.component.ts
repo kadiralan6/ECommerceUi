@@ -11,20 +11,21 @@ import { ProductService } from '../../../../services/adminServices/product.servi
   styleUrl: './list-products.component.css'
 })
 export class ListProductsComponent implements OnInit  {
-  products: ProductListModel[] = [];
+  products: ProductListModel = { products: [], resultStatus: 0 };
 
 constructor(private productService:ProductService){}
 ngOnInit() : void {
   this.loadProducts();
 }
 loadProducts(): void {
-  this.productService.getList(
-    (data) => {
-      this.products = data; // API'den gelen ürünler
-      console.log('Products:', this.products);
+  console.log("a");
+  this.productService.getListProduct(
+    (res) => {
+      this.products = res; // Gelen veriyi atayın
+      console.log('Products loaded successfully:', res);
     },
     () => {
-      console.error('Error fetching product list.');
+      console.error('Failed to load products');
     }
   );
 }
