@@ -10,11 +10,11 @@ import { ProductListModel } from "../../models/products/productList.model";
 export class ProductService{
     constructor(private httpSerivce:HttpService){}
 
-    getListProduct(successCallback: (products: ProductListModel) => void, errorCallback?: () => void): void {
+  /*  getListProduct(successCallback: (products: ProductListModel) => void, errorCallback?: () => void): void {
       this.httpSerivce.get<ProductListModel>(
         'product/getListProduct', // API endpoint
         successCallback, // Başarılı callback
         errorCallback // Hata callback
       );
-    }
+    }*/
 }

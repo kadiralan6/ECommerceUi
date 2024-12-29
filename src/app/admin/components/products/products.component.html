@@ -1,9 +1,77 @@
-<div>
-  
-  
+<app-blank pageName="Ürünler" [routes]="['Ürünler']">
+  <app-section sectionTitle="Ürün Listesi">
+    <div class="form-group row">
+        <div class="col-9">
+            <button class="btn btn-dark" data-toggle="modal" (click)="getCategories()" data-target="#createModal">
+                <i class="fa-solid fa-plus me-1"></i>
+                Ürün Ekle
+            </button>
+        </div>
+
+        <div class="col-3">
+            <input [(ngModel)]="search" type="search" class="form-control" placeholder="Aranacak değer girin...">
+        </div>
+    </div>
+
     <!-- Eğer 'showList' true ise ürün listeleme bileşeni gösterilir -->
     <app-list-products></app-list-products>
-    
+
+  </app-section>
+</app-blank>
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5">Ürün Ekleme Formu</h1>
+              <button type="button" #createModalCloseBtn class="btn btn-outline-danger" data-dismiss="modal">
+                  <i class="fa-solid fa-x"></i>
+              </button>
+          </div>
+          <form formValidate #createForm="ngForm" autocomplete="off" (ngSubmit)="create(createForm)">
+              <div class="modal-body">
+                  <div class="form-group">
+                      <label>Ürün Adı</label>
+                      <input type="text" required minlength="3" [(ngModel)]="createModel.name" class="form-control" name="name">
+                      <div class="invalid-feedback"></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Ürün Kodu</label>
+                    <input type="text" required minlength="3" [(ngModel)]="createModel.code" class="form-control" name="code">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="form-group">
+                  <label>Stok Adedi</label>
+                  <input type="text" required minlength="3" [(ngModel)]="createModel.quantity" class="form-control" name="quantity">
+                  <div class="invalid-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label>Ürün Fiyatı</label>
+                <input type="text" required minlength="3" [(ngModel)]="createModel.price" class="form-control" name="price">
+                <div class="invalid-feedback"></div>
+            </div>            
+                  <div class="form-group mt-2">
+                      <label>Kategori Adı</label>
+                      <select class="form-control" name="categoryName" [(ngModel)]="createModel.categoryName"  (change)="onCategoryChange($event)">                     
+                          <option *ngFor="let category of categoryNames" [value]="category.name">{{category.name}}</option>                       
+                      </select>
+                      <div class="invalid-feedback"></div>
+                  </div>  
+                  <div class="form-group mt-2">
+                    <label>Alt Kategori Adı</label>
+                    <select class="form-control" name="subCategoryName" [(ngModel)]="createModel.subCategory1" [disabled]="!subCategories1.length">
+                      <option *ngFor="let subCategory of subCategories1" [value]="subCategory">{{ subCategory }}</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                  </div>
+                  
+
+              </div>
+              <div class="modal-footer">                    
+                  <button type="submit" class="btn btn-dark w-100">Kaydet</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
     <!-- Eğer 'showList' false ise ürün oluşturma bileşeni gösterilir -->
 
-  </div>

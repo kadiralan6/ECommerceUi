@@ -1,7 +1,8 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 import { SharedModule } from '../../../modules/shared/shared.module';
+
 import { ProductListModel } from '../../../../models/products/productList.model';
-import { ProductService } from '../../../../services/adminServices/product.service';
+import { HttpService } from '../../../../services/http.service';
 
 @Component({
   selector: 'app-list-products',
@@ -11,22 +12,19 @@ import { ProductService } from '../../../../services/adminServices/product.servi
   styleUrl: './list-products.component.css'
 })
 export class ListProductsComponent implements OnInit  {
-  products: ProductListModel = { products: [], resultStatus: 0 };
+  productList: ProductListModel[] = [];
 
-constructor(private productService:ProductService){}
+constructor(private httpService:HttpService){}
 ngOnInit() : void {
-  this.loadProducts();
+this.getAll();
 }
-loadProducts(): void {
-  console.log("a");
-  this.productService.getListProduct(
-    (res) => {
-      this.products = res; // Gelen veriyi atayın
-      console.log('Products loaded successfully:', res);
-    },
-    () => {
-      console.error('Failed to load products');
-    }
-  );
+
+getAll(){
+  console.log("1");
+  this.httpService.get<ProductListModel[]>("product/getListProduct",(res)=>{
+    this.productList=res;
+  })
 }
+
+
 }
